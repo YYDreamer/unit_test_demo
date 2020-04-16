@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiangxin.unit_test_demo.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.jiangxin.unit_test_demo.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="realName" jdbcType="VARCHAR" property="realName" />
+    </resultMap>
+
+    <sql id="base_column_list">
+        id, userName, password, realName
+    </sql>
+
+    <select id="getUser" resultMap="BaseResultMap">
+        select
+        <include refid="base_column_list"/>
+        from user
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="addUser" parameterType="com.jiangxin.unit_test_demo.entity.User">
+        insert into
+        user(
+            <include refid="base_column_list"/>
+        )
+        values(
+            #{id},#{userName},#{password},#{realName}
+        )
+    </select>
+
+    <select id="deleteUser">
+        delete from user
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="updateUser" parameterType="com.jiangxin.unit_test_demo.entity.User">
+        update user
+        <set>
+            userName = #{userName}
+            ,password = #{password}
+            ,realName = #{realName}
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+</mapper>
